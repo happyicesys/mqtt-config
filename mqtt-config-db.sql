@@ -1,0 +1,23 @@
+CREATE TABLE `mqttcfg` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `imei` varchar(100) NOT NULL,
+  `UserName` varchar(100) DEFAULT NULL,
+  `Password` varchar(100) DEFAULT NULL,
+  `Host` varchar(100) DEFAULT NULL,
+  `Port` varchar(100) DEFAULT NULL,
+  `PublishTopic` varchar(100) DEFAULT NULL,
+  `SubscribeTopic` varchar(100) DEFAULT NULL,
+  `AccessTime` varchar(100) DEFAULT NULL,
+  `ClientID` varchar(100) DEFAULT NULL,
+  `createTime` varchar(50) DEFAULT NULL,
+  `whos` varchar(100) DEFAULT NULL,
+  `adminpwd` varchar(100) DEFAULT NULL,
+  `ver` varchar(100) DEFAULT NULL,
+  `adminid` int(11) DEFAULT NULL COMMENT '管理员id',
+  `serialport` varchar(100) DEFAULT NULL COMMENT '串口号',
+  `venderid` int(11) DEFAULT NULL COMMENT '机器编号',
+  `has_synchron` tinyint(4) DEFAULT NULL COMMENT '是否使用动态平衡策略',
+  `weburl` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`,`imei`),
+  KEY `imei` (`imei`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=12043 DEFAULT CHARSET=utf8;

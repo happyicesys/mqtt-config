@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class VendMqttController extends Controller
 {
-    public function validate(Request $request)
+    public function create(Request $request)
     {
         DataLog::create([
             'content' => $request->all()

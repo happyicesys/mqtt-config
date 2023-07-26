@@ -13,6 +13,7 @@ class VendMqttController extends Controller
     public function create(Request $request)
     {
         DataLog::create([
+            'ip_address' => $request->ip(),
             'content' => $request->all(),
         ]);
 

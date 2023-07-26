@@ -6,12 +6,14 @@ use App\Models\DataLog;
 use App\Models\VendMqtt;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class VendMqttController extends Controller
 {
     public function create(Request $request)
     {
         $vendMqtt = VendMqtt::where('imei', $request->imei)->first();
+        Log::info('IMEI:'.$request->imei.','.$vendMqtt->id);
         if(!$vendMqtt) {
             throw new \Exception('IMEI not found');
         }
@@ -24,10 +26,11 @@ class VendMqttController extends Controller
             VendMqtt::SIGN_KEY
         );
         $localSignedString = strtolower(md5($localString));
-
+        Log::info('Local:'.$localSignedString);
         $vendSignedString = strtolower($request->Sign);
-
+        Log::info('Incoming:'.$vendSignedString);
         if($localSignedString !== $vendSignedString) {
+            Log::info('failed');
             throw new \Exception('Invalid Sign');
         }
         $vendMqtt->update([

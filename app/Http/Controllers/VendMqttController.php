@@ -12,11 +12,17 @@ class VendMqttController extends Controller
 {
     public function create(Request $request)
     {
+        DataLog::create([
+            'imei' => $request->imei,
+            'data' => $request->all(),
+        ]);
+
         $vendMqtt = VendMqtt::where('imei', $request->imei)->first();
-        Log::info('IMEI:'.$request->imei.','.$vendMqtt->id);
+
         if(!$vendMqtt) {
             throw new \Exception('IMEI not found');
         }
+        Log::info('IMEI:'.$request->imei.','.$vendMqtt->id);
 
         $localString = sprintf(
             "IMEI=%s&Timestamp=%s&Version=%s&%s",

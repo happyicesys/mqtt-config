@@ -17,7 +17,6 @@ class VendMqtt extends Model
         'imei',
         'password',
         'port',
-        'private_key',
         'publish_topic',
         'subscribe_topic_prefix',
         'username',

@@ -13,8 +13,7 @@ class VendMqttController extends Controller
     public function create(Request $request)
     {
         DataLog::create([
-            'imei' => $request->imei,
-            'data' => $request->all(),
+            'content' => $request->all(),
         ]);
 
         $vendMqtt = VendMqtt::where('imei', $request->imei)->first();

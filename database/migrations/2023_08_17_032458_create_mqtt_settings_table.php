@@ -23,11 +23,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('vend_mqtts', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('mqtt_setting_id')->unsigned()->nullable();
-            $table->string('name');
-        });
     }
 
     /**

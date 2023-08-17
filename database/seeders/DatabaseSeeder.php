@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // VendMqttSeeder::class,
-            IndonVendSeeder::class,
+            // IndonVendSeeder::class,
+            MqttSettingSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 

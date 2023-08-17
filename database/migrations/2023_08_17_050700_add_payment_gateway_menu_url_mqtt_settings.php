@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('mqtt_configs', function (Blueprint $table) {
+        Schema::table('mqtt_settings', function (Blueprint $table) {
             $table->string('payment_gateway_menu_url')->nullable();
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('mqtt_configs', function (Blueprint $table) {
+        Schema::table('mqtt_settings', function (Blueprint $table) {
             $table->dropColumn('payment_gateway_menu_url');
         });
     }

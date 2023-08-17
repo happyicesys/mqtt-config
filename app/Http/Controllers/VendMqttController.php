@@ -17,12 +17,17 @@ class VendMqttController extends Controller
             'content' => $request->all(),
         ]);
 
-        $vendMqtt = VendMqtt::where('imei', $request->IMEI)->first();
+        $vendMqtt = VendMqtt::query()
+            ->with([
+                'mqttSetting'
+            ])
+            ->where('imei', $request->IMEI)
+            ->first();
+
 
         if(!$vendMqtt) {
             throw new \Exception('IMEI not found');
         }
-        Log::info('IMEI:'.$request->IMEI.','.$vendMqtt->id);
 
         $localString = sprintf(
             "IMEI=%s&Timestamp=%s&Version=%s&%s",
@@ -32,9 +37,7 @@ class VendMqttController extends Controller
             VendMqtt::SIGN_KEY
         );
         $localSignedString = strtolower(md5($localString));
-        Log::info('Local:'.$localSignedString);
         $vendSignedString = strtolower($request->Sign);
-        Log::info('Incoming:'.$vendSignedString);
         if($localSignedString !== $vendSignedString) {
             Log::info('failed');
             throw new \Exception('Invalid Sign');
@@ -46,13 +49,14 @@ class VendMqttController extends Controller
         $result = [
             'data' => [
                 'ClientID' => Carbon::now()->timestamp.$vendMqtt->vend_code,
-                'Host' => $vendMqtt->host,
-                'Password' => $vendMqtt->password,
-                'Port' => $vendMqtt->port,
-                'PublishTopic' => $vendMqtt->publish_topic,
+                'Host' => $vendMqtt->mqttSetting->host,
+                'Password' => $vendMqtt->mqttSetting->password,
+                'Port' => $vendMqtt->mqttSetting->port,
+                'PublishTopic' => $vendMqtt->mqttSetting->publish_topic,
                 'ServerTime' => Carbon::now()->toDateTimeString(),
-                'SubscribeTopic' => $vendMqtt->subscribe_topic_prefix,
-                'UserName' => $vendMqtt->username,
+                'SubscribeTopic' => $vendMqtt->mqttSetting->subscribe_topic_prefix,
+                'UserName' => $vendMqtt->mqttSetting->username,
+                'payment_gateway_menu_url' => $vendMqtt->mqttSetting->payment_gateway_menu_url,
             ],
             'error_code' => 0,
             'error_msg' => 'success',

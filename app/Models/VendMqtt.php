@@ -23,4 +23,9 @@ class VendMqtt extends Model
         'vend_code',
         'version',
     ];
+
+    public function mqttSetting()
+    {
+        return $this->belongsTo(MqttSetting::class);
+    }
 }

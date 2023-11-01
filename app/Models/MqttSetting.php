@@ -10,11 +10,13 @@ class MqttSetting extends Model
     use HasFactory;
 
     protected $fillable = [
+        'delivery_complaint_form_url',
         'name',
         'host',
         'password',
         'port',
         'publish_topic',
+        'refund_request_form_url',
         'subscribe_topic_prefix',
         'username',
     ];

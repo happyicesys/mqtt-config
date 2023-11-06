@@ -17,6 +17,10 @@ class VendMqttController extends Controller
             'content' => $request->all(),
         ]);
 
+        if(!$request->IMEI and !$request->Timestamp and !$request->Sign) {
+            abort(response('Parameter Incomplete', 404));
+        }
+
         $vendMqtt = VendMqtt::query()
             ->with([
                 'mqttSetting'
@@ -26,7 +30,7 @@ class VendMqttController extends Controller
 
 
         if(!$vendMqtt) {
-            throw new \Exception('IMEI not found');
+            abort(response('IMEI not found', 404));
         }
 
         $localString = sprintf(
@@ -39,8 +43,7 @@ class VendMqttController extends Controller
         $localSignedString = strtolower(md5($localString));
         $vendSignedString = strtolower($request->Sign);
         if($localSignedString !== $vendSignedString) {
-            Log::info('failed');
-            throw new \Exception('Invalid Sign');
+            abort(response('Invalid Sign, Unauthorized', 401));
         }
         $vendMqtt->update([
             'version' => $request->Version,

@@ -26,7 +26,7 @@ class VendMqtt extends Model
         self::ERROR_BAD_REQUEST => 'Bad Request, Parameter Incomplete',
         self::ERROR_UNAUTHORIZED => 'Unauthorized, Invalid Sign',
         self::ERROR_FORBIDDEN => 'Forbidden',
-        self::ERROR_NOT_FOUND => 'Not Found, IMEI not found',
+        self::ERROR_NOT_FOUND => 'IMEI not found',
         self::ERROR_METHOD_NOT_ALLOWED => 'Method Not Allowed',
         self::ERROR_REQUEST_TIMEOUT => 'Request Timeout',
         self::ERROR_CONFLICT => 'Conflict',

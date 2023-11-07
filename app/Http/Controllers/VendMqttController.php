@@ -18,7 +18,10 @@ class VendMqttController extends Controller
         ]);
 
         if(!$request->IMEI and !$request->Timestamp and !$request->Sign) {
-            abort(response('Parameter Incomplete', 404));
+            abort(response([
+                'error_code' => VendMqtt::ERROR_BAD_REQUEST,
+                'error_msg' => VendMqtt::ERRORS_MAPPING[VendMqtt::ERROR_BAD_REQUEST],
+            ], VendMqtt::ERROR_BAD_REQUEST));
         }
 
         $vendMqtt = VendMqtt::query()
@@ -30,7 +33,10 @@ class VendMqttController extends Controller
 
 
         if(!$vendMqtt) {
-            abort(response('IMEI not found', 404));
+            abort(response([
+                'error_code' => VendMqtt::ERROR_NOT_FOUND,
+                'error_msg' => VendMqtt::ERRORS_MAPPING[VendMqtt::ERROR_NOT_FOUND],
+            ], VendMqtt::ERROR_NOT_FOUND));
         }
 
         $localString = sprintf(
@@ -43,7 +49,10 @@ class VendMqttController extends Controller
         $localSignedString = strtolower(md5($localString));
         $vendSignedString = strtolower($request->Sign);
         if($localSignedString !== $vendSignedString) {
-            abort(response('Invalid Sign, Unauthorized', 401));
+            abort(response([
+                'error_code' => VendMqtt::ERROR_UNAUTHORIZED,
+                'error_msg' => VendMqtt::ERRORS_MAPPING[VendMqtt::ERROR_UNAUTHORIZED],
+            ], VendMqtt::ERROR_UNAUTHORIZED));
         }
         $vendMqtt->update([
             'version' => $request->Version,

@@ -10,6 +10,7 @@ class MqttSetting extends Model
     use HasFactory;
 
     protected $fillable = [
+        'banner_route',
         'delivery_complaint_form_url',
         'name',
         'host',
@@ -18,6 +19,7 @@ class MqttSetting extends Model
         'publish_topic',
         'refund_request_form_url',
         'subscribe_topic_prefix',
+        'sys_hostname',
         'username',
     ];
 }

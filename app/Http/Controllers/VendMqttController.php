@@ -70,6 +70,8 @@ class VendMqttController extends Controller
                 'UserName' => $vendMqtt->mqttSetting->username,
                 'payment_gateway_menu_url' => $vendMqtt->mqttSetting->payment_gateway_menu_url,
                 'refund_request_form_url' => $vendMqtt->mqttSetting->refund_request_form_url ? $vendMqtt->mqttSetting->refund_request_form_url.'?machineID='.$vendMqtt->vend_code : '',
+                'sys_hostname' => $vendMqtt->mqttSetting->sys_hostname,
+                'banner_route' => $vendMqtt->mqttSetting->banner_route,
                 // 'delivery_complaint_form_url' => $vendMqtt->mqttSetting->delivery_complaint_form_url ? $vendMqtt->mqttSetting->delivery_complaint_form_url.'?machineID='.$vendMqtt->vend_code : '',
             ],
             'error_code' => 0,

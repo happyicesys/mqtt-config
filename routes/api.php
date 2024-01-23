@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// api/validate
 Route::post('/validate', [VendMqttController::class, 'create']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
